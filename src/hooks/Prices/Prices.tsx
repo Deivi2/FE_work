@@ -32,6 +32,7 @@ const Prices = () => {
             displayCurrencies.includes(price.code)
           )
         );
+        setAllPrices(Object.values(bpi));
       });
   }, [displayCurrencies]);
 
@@ -59,9 +60,13 @@ const Prices = () => {
 
   const addPrice = useCallback(
     (price: string) => {
-      setDisplayCurrencies([price, ...displayCurrencies]);
+      const pricesToShow = [...displayCurrencies, price];
+      setDisplayCurrencies(pricesToShow);
+      setPriceValues(
+        allPrices.filter((price) => pricesToShow.includes(price.code))
+      );
     },
-    [displayCurrencies]
+    [allPrices, displayCurrencies]
   );
 
   const deletePrice = useCallback(
