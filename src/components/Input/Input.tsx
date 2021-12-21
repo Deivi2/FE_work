@@ -15,7 +15,7 @@ const Input: FC<IProps> = (props) => {
         type={props.type}
         name={props.name}
         onChange={props.onChange}
-        maxLength={20}
+        maxLength={15}
       />
       <Label>{props.label}</Label>
     </Root>
