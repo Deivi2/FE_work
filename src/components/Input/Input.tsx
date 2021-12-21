@@ -11,13 +11,13 @@ interface IProps {
 const Input: FC<IProps> = (props) => {
   return (
     <Root>
-      <Label>{props.label}</Label>
       <input
         type={props.type}
         name={props.name}
         onChange={props.onChange}
         maxLength={20}
       />
+      <Label>{props.label}</Label>
     </Root>
   );
 };

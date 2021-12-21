@@ -1,6 +1,7 @@
+import { Oval } from "components/common";
 import React, { FC, useState } from "react";
 import { IPrice } from "typings";
-import { Element, Root } from "./styles";
+import { DropDownEnter, Element, Root } from "./styles";
 
 interface IProps {
   addPrice(currency: string): void;
@@ -18,9 +19,18 @@ const DropDownToAddPrice: FC<IProps> = (props) => {
 
   if (!prices.some(Boolean)) return <></>;
 
+  const dropDownEnter = () => (
+    <DropDownEnter>
+      <div>{openDropDown ? "🡇 Close" : "🡅 Open"}</div>
+      <Oval width={20} height={20}>
+        {prices.length}
+      </Oval>
+    </DropDownEnter>
+  );
+
   return (
     <Root onClick={() => setOpenDropDown(!openDropDown)}>
-      {openDropDown ? <div>{"Close"}</div> : <div>{"Open"}</div>}
+      {dropDownEnter()}
       {openDropDown && (
         <div>
           {prices.map((value, i) => (
@@ -28,8 +38,8 @@ const DropDownToAddPrice: FC<IProps> = (props) => {
               key={`drop-down-element-${i}`}
               onClick={() => handleAddPrice(value.code)}
             >
-              <div>Add</div>
               <div>{value.code}</div>
+              <div>Add</div>
             </Element>
           ))}
         </div>

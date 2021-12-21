@@ -2,27 +2,32 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { IPrice, IPrices } from "typings";
 
 const url = "https://api.coindesk.com/v1/bpi/currentprice.json";
+const time = 60000;
 
 const Prices = () => {
   const [priceValues, setPriceValues] = useState<Array<IPrice>>([]);
   const [allPrices, setAllPrices] = useState<Array<IPrice>>([]);
   const [displayCurrencies, setDisplayCurrencies] = useState<Array<string>>([]);
+  const [loading, setLoading] = useState(false);
   const interval = useRef<ReturnType<typeof setInterval>>();
-  const secondFetch = useRef(false);
 
   const initFetch = useCallback(() => {
+    setLoading(true);
     fetch(url)
       .then((response) => response.json())
       .then((data) => {
         const bpi: IPrices = data.bpi;
-        secondFetch.current = true;
         setDisplayCurrencies(Object.keys(bpi));
         setPriceValues(Object.values(bpi));
         setAllPrices(Object.values(bpi));
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }, []);
 
   const intervalFetch = useCallback(() => {
+    setLoading(true);
     fetch(url)
       .then((response) => response.json())
       .then((data) => {
@@ -33,6 +38,9 @@ const Prices = () => {
           )
         );
         setAllPrices(Object.values(bpi));
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }, [displayCurrencies]);
 
@@ -43,7 +51,7 @@ const Prices = () => {
   useEffect(() => {
     interval.current = setInterval(async () => {
       intervalFetch();
-    }, 60000);
+    }, time);
 
     return () => {
       clearInterval(interval.current as ReturnType<typeof setInterval>);
@@ -78,7 +86,7 @@ const Prices = () => {
     [displayCurrencies]
   );
 
-  return { prices, addPrice, deletePrice, deletedPrices };
+  return { prices, addPrice, deletePrice, deletedPrices, loading };
 };
 
 export default Prices;

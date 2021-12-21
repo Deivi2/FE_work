@@ -18,9 +18,9 @@ const Amount: FC<IProps> = (props) => {
   };
 
   return (
-    <Root>
+    <Root onClick={() => handleDeleteClick(props.price.code)}>
       <div>{amount}</div>
-      <Delete onClick={() => handleDeleteClick(props.price.code)}>X</Delete>
+      <Delete>Remove</Delete>
     </Root>
   );
 };

@@ -5,7 +5,7 @@ import { Prices } from "hooks";
 
 const Form = () => {
   const [exchangeAmount, setExchangeAmount] = useState<string>("");
-  const { prices, deletedPrices, deletePrice, addPrice } = Prices();
+  const { prices, deletedPrices, addPrice, deletePrice } = Prices();
 
   const handleInput = (event: ChangeEvent<HTMLInputElement>) => {
     setExchangeAmount(event.target.value);
@@ -15,7 +15,7 @@ const Form = () => {
     <Root>
       <Input
         type={"text"}
-        label={"Bitcoin amount"}
+        label={"Bitcoin price"}
         name={"btc"}
         onChange={handleInput}
       />
