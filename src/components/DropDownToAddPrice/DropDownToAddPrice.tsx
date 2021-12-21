@@ -21,7 +21,7 @@ const DropDownToAddPrice: FC<IProps> = (props) => {
 
   const dropDownEnter = () => (
     <DropDownEnter>
-      <div>{openDropDown ? "🡇 Close" : "🡅 Open"}</div>
+      <div>{openDropDown ? "🡅 Hide" : "🡇 Show"}</div>
       <Oval width={20} height={20}>
         {prices.length}
       </Oval>
